@@ -26,6 +26,34 @@ JOIN
     payments py ON b.booking_id = py.booking_id;
 ```
 
+Run this for each query before and after creating the indexes defined in `database_index.sql`.
+
+## Performance Comparison
+
+### Before Indexes
+
+- **Query 1 (All Bookings and user who made the the booking):**
+  - Execution Time: [Enter execution time here]
+  - Query Plan: [Enter query plan here]
+- **Query 2 (All properties and their reviews):**
+  - Execution Time: [Enter execution time here]
+  - Query Plan: [Enter query plan here]
+- **Query 3 (All users and their bookings):**
+  - Execution Time: [Enter execution time here]
+  - Query Plan: [Enter query plan here]
+
+### After Indexes
+
+- **Query 1 (All Bookings and user who made the the booking):**
+  - Execution Time: [Enter execution time here]
+  - Query Plan: [Enter query plan here]
+- **Query 2 (All properties and their reviews):**
+  - Execution Time: [Enter execution time here]
+  - Query Plan: [Enter query plan here]
+- **Query 3 (All users and their bookings):**
+  - Execution Time: [Enter execution time here]
+  - Query Plan: [Enter query plan here]
+
 ## Analysis
 
 Adding indexes on foreign key columns (`user_id`, `property_id`, `booking_id`) significantly improves the performance of `JOIN` operations. The database can use the indexes to quickly look up matching rows in the joined tables, avoiding costly full-table scans.
