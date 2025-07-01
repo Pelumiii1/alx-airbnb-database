@@ -1,23 +1,18 @@
--- All properties with at least one review with a rating higher than 4
-SELECT p.property_id, p.property_name, p.property_type, AVG(r.rating) AS avg_rating
-FROM property p
-    JOIN review r ON p.property_id = r.property_id
-GROUP BY
-    p.property_id,
-    p.property_name,
-    p.property_type
-HAVING
-    AVG(r.rating) > 4.0
-ORDER BY avg_rating DESC;
+-- Properties with average rating > 4.0 (Non-correlated subquery)
+SELECT property_id, property_name, property_type
+FROM property
+WHERE property_id IN (
+    SELECT property_id
+    FROM review
+    GROUP BY property_id
+    HAVING AVG(rating) > 4.0
+);
 
--- All users who have made more than 3 bookings
-SELECT u.user_id, u.username, u.email, COUNT(b.booking_id) AS booking_count
+-- Users with more than 3 bookings (Correlated subquery)
+SELECT user_id, username, email
 FROM user u
-    JOIN booking b ON u.user_id = b.user_id
-GROUP BY
-    u.user_id,
-    u.username,
-    u.email
-HAVING
-    COUNT(b.booking_id) > 3
-ORDER BY booking_count DESC;
+WHERE (
+    SELECT COUNT(booking_id)
+    FROM booking b
+    WHERE b.user_id = u.user_id
+) > 3;
